@@ -1,5 +1,9 @@
 package com.example.newMusicApp;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -51,5 +55,17 @@ public class PlaybackManager {
 
     public void exportPlaylist(String filePath) {
         library.exportPlaylist(filePath);
+
+        System.out.println("Exported playlist to: " + filePath);
+        try (BufferedReader br = Files.newBufferedReader(Paths.get(filePath))) {
+            System.out.println("Exported Playlist Contents:");
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading exported file: " + e.getMessage());
+        }
+
     }
 }
